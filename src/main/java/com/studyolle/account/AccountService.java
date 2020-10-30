@@ -37,7 +37,7 @@ public class AccountService {
     }
 
     // 이메일 보내기
-    private void sendSignUpConfirmEmail(Account newAccount) {
+    public void sendSignUpConfirmEmail(Account newAccount) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(newAccount.getEmail());
         mailMessage.setSubject("스터디 올래, 회원 가입 인증"); // 제목
