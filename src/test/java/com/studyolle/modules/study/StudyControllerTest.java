@@ -1,17 +1,15 @@
 package com.studyolle.modules.study;
 
-import com.studyolle.modules.account.WithAccount;
+import com.studyolle.infra.MockMvcTest;
 import com.studyolle.modules.account.Account;
+import com.studyolle.modules.account.AccountFactory;
 import com.studyolle.modules.account.AccountRepository;
-import lombok.RequiredArgsConstructor;
+import com.studyolle.modules.account.WithAccount;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -19,16 +17,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@Transactional
-@SpringBootTest
-@AutoConfigureMockMvc
-@RequiredArgsConstructor
+@MockMvcTest
 public class StudyControllerTest {
 
-    @Autowired protected MockMvc mockMvc;
-    @Autowired protected StudyService studyService;
-    @Autowired protected StudyRepository studyRepository;
-    @Autowired protected AccountRepository accountRepository;
+    @Autowired MockMvc mockMvc;
+    @Autowired StudyService studyService;
+    @Autowired StudyRepository studyRepository;
+    @Autowired AccountRepository accountRepository;
+    @Autowired AccountFactory accountFactory;
+    @Autowired StudyFactory studyFactory;
 
     @AfterEach
     void afterEach() {
@@ -108,9 +105,9 @@ public class StudyControllerTest {
     @WithAccount("hayoung")
     @DisplayName("스터디 가입")
     void joinStudy() throws Exception {
-        Account kimhayoung = createAccount("kimhayoung");
+        Account kimhayoung = accountFactory.createAccount("kimhayoung");
 
-        Study study = createStudy("test-study", kimhayoung);
+        Study study =  studyFactory.createStudy("test-study", kimhayoung);
 
         mockMvc.perform(get("/study/" + study.getPath() + "/join"))
                 .andExpect(status().is3xxRedirection())
@@ -124,8 +121,8 @@ public class StudyControllerTest {
     @WithAccount("hayoung")
     @DisplayName("스터디 탈퇴")
     void leaveStudy() throws Exception {
-        Account kimhayoung = createAccount("kimhayoung");
-        Study study = createStudy("test-study", kimhayoung);
+        Account kimhayoung = accountFactory.createAccount("kimhayoung");
+        Study study =  studyFactory.createStudy("test-study", kimhayoung);
 
         Account hayoung = accountRepository.findByNickname("hayoung");
         studyService.addMember(study, hayoung);
@@ -136,20 +133,4 @@ public class StudyControllerTest {
 
         assertFalse(study.getMembers().contains(hayoung));
     }
-
-    protected Study createStudy(String path, Account manager) {
-        Study study = new Study();
-        study.setPath(path);
-        studyService.createNewStudy(study, manager);
-        return study;
-    }
-
-    protected Account createAccount(String nickname) {
-        Account kimhayoung = new Account();
-        kimhayoung.setNickname(nickname);
-        kimhayoung.setEmail(nickname + "@email.com");
-        accountRepository.save(kimhayoung);
-        return kimhayoung;
-    }
-
 }
