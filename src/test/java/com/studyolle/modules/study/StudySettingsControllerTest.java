@@ -32,7 +32,8 @@ class StudySettingsControllerTest {
         Study study = studyFactory.createStudy("test-study", kimhayoung);
 
         mockMvc.perform(get("/study/" + study.getPath() + "/settings/description"))
-                .andExpect(status().isForbidden());
+                .andExpect(status().isOk())
+                .andExpect(view().name("error"));
     }
 
     @Test
