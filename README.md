@@ -1,6 +1,19 @@
-# StudyOlle
-- 스터디 모임 관리 서비스
+# :pushpin: StudyOlle
+> 스터디 모임 관리 서비스
+<br>
 
-## 참고
-- > [인프런 - 스프링과 JPA 기반 웹 애플리케이션 개발](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-JPA-%EC%9B%B9%EC%95%B1/dashboard)
+## :round_pushpin: 사용 기술
+    - Java 11
+    - Spring Boot 2.3.4
+    - Maven
+    - Spring Data JPA
+    - QueryDSL
+    - H2
+    - PostgreSQL 13.1
+    - Spring Security
+    - Thymeleaf
+    - JUnit
+<br>
 
+## ER Diagram
+![](https://github.com/qlalzl9/TIL/blob/master/Spring_SpringBoot/img/studyolleERD.png)
