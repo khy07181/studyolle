@@ -1,5 +1,6 @@
 # :pushpin: StudyOlle
 > 스터디 모임 관리 서비스
+![](https://github.com/qlalzl9/TIL/blob/master/Spring_SpringBoot/img/studyolleIndex.png)
 <br>
 
 ## :round_pushpin: 사용 기술
