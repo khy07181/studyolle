@@ -3,7 +3,7 @@
 ![](https://github.com/qlalzl9/TIL/blob/master/Spring_SpringBoot/img/studyolleIndex.png)
 <br>
 
-## :round_pushpin: 사용 기술
+## 사용 기술
     - Java 11
     - Spring Boot 2.3.4
     - Maven
